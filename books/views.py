@@ -8,6 +8,16 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 
+class ApiRoot(generics.GenericAPIView):
+    name = 'api-root'
+    def get(self, request, *args, **kwargs):
+        return Response({
+            'Authors': reverse(AuthorList.name, request=request),
+            'Categories': reverse(CategoryList.name,
+            request=request),
+            'Books': reverse(BookList.name, request=request)
+            })
+
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -36,4 +46,4 @@ class AuthorList(generics.ListCreateAPIView):
 class AuthorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    name = 'author-detail' 
+    name = 'author-detail'
