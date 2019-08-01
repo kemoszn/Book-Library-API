@@ -20,4 +20,7 @@ urlpatterns = [
     url(r'^authors/(?P<pk>[0-9]+)/$',
             views.AuthorDetail.as_view(),
             name=views.AuthorDetail.name),
+    url(r'^$',
+            views.ApiRoot.as_view(),
+            name=views.ApiRoot.name),
 ]
