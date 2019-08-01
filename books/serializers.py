@@ -3,6 +3,8 @@ from .models import *
 from .views import *
 
 class BookSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(queryset=Author.objects.all(),
+    slug_field='name') 
     category = serializers.SlugRelatedField(queryset=Category.objects.all(),
     slug_field='name') #to show name of category instead of id
 

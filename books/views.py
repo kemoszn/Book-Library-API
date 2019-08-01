@@ -1,49 +1,39 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
+from .models import *
+from .serializers import *
+from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework import status
-from .models import Book
-from .serializers import BookSerializer
+from rest_framework.reverse import reverse
 
 
-@api_view(['GET', 'POST'])
-def book_list(request):
-    if request.method == 'GET':
-        books = Book.objects.all()
-        books_serializer = BookSerializer(books, many=True)
-        return Response(books_serializer.data)
-    elif request.method == 'POST':
-        book_serializer = BookSerializer(data=request.data)
-        if book_serializer.is_valid():
-            book_serializer.save()
-            return Response(book_serializer.data,
-            status=status.HTTP_201_CREATED)
-        return Response(book_serializer.errors,
-        status=status.HTTP_400_BAD_REQUEST)
+class CategoryList(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    name = 'category-list'
 
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    name = 'category-detail'
 
-@api_view(['GET', 'PUT', 'POST'])
-def book_detail(request, pk):
-    try:
-        book = Book.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+class BookList(genrics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    name = 'book-list'
 
-    if request.method == 'GET':
-        book_serializer = BookSerializer(book)
-        return Response(book_serializer.data)
+class BookDetail(generics.RetrieveUpdateDestroyAPIView:
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    name = 'book-detail'
 
-    elif request.method == 'PUT':
-        book_serializer = GameSerializer(book, data=request.data)
-        if book_serializer.is_valid():
-            book_serializer.save()
-            return Response(book_serializer.data)
-        return Response(book_serializer.errors,
-        status=status.HTTP_400_BAD_REQUEST)
+class AuthorList(generics.ListCreateAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    name = 'author-list'
 
-    elif request.method == 'DELETE':
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class AuthorDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    name = 'author-detail' 
