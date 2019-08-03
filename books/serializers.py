@@ -9,7 +9,7 @@ class UserBookSerializer(serializers.HyperlinkedModelSerializer):
         model = Book
         fields = (
         'url',
-        'name'
+        'title'
         )
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,7 +21,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         'url',
         'pk',
         'username',
-        'games'
+        'books'
         )
 
 class BookSerializer(serializers.ModelSerializer):
