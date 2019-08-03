@@ -3,9 +3,12 @@ from __future__ import unicode_literals
 
 from .models import *
 from .serializers import *
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from django.contrib.auth.models import User
+from books.serializers import UserSerializer
+from books.permissions import IsOwnerOrReadOnly
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -15,8 +18,21 @@ class ApiRoot(generics.GenericAPIView):
             'Authors': reverse(AuthorList.name, request=request),
             'Categories': reverse(CategoryList.name,
             request=request),
-            'Books': reverse(BookList.name, request=request)
+            'Books': reverse(BookList.name, request=request),
+            'users': reverse(UserList.name, request=request),
             })
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    name = 'user-list'
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    name = 'user-detail'
+
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
@@ -32,11 +48,22 @@ class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     name = 'book-list'
+    def perform_create(self, serializer):
+        # To Set the owner to the user received in request
+        serializer.save(owner=self.request.user)
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+        )
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     name = 'book-detail'
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+        )
 
 class AuthorList(generics.ListCreateAPIView):
     queryset = Author.objects.all()

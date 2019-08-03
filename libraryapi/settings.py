@@ -131,7 +131,7 @@ DEFAULT_RENDERER_CLASSES = (
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
     'books.pagination.LimitOffsetPaginationWithMaxLimit',
-    'PAGE_SIZE': 5
+    'PAGE_SIZE': 5,
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
