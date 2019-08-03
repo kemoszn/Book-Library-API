@@ -115,7 +115,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-#Parsers and Renderers
+#API Parsers and Renderers
 DEFAULT_PARSER_CLASSES = (
     'rest_framework.parsers.JSONParser',
     'rest_framework.parsers.FormParser',
@@ -127,6 +127,16 @@ DEFAULT_RENDERER_CLASSES = (
     'rest_framework.renderers.BrowsableAPIRenderer',
 )
 
+#RESTful API Pagination and Authentication
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+    'books.pagination.LimitOffsetPaginationWithMaxLimit',
+    'PAGE_SIZE': 5
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        )
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
