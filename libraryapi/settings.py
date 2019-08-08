@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'books.apps.BooksConfig',
+    'crispy_forms',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -127,11 +129,16 @@ DEFAULT_RENDERER_CLASSES = (
     'rest_framework.renderers.BrowsableAPIRenderer',
 )
 
-#RESTful API Pagination and Authentication
+#RESTful API Pagination, Authentication, Throttling, Filters
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS':
     'books.pagination.LimitOffsetPaginationWithMaxLimit',
     'PAGE_SIZE': 5,
+    #'DEFAULT_FILTER_BACKENDS': (
+    #    'rest_framework.filters.DjangoFilterBackend',
+    #    'rest_framework.filters.SearchFilter',
+    #    'rest_framework.filters.OrderingFilter',
+    #    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -146,6 +153,17 @@ REST_FRAMEWORK = {
         'game-categories': '30/hour',
         }
 }
+#API Testing
+# We want to use nose to run all the tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# We want nose to measure coverage on the games app
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-erase',
+    '--cover-inclusive',
+    '--cover-package=games',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
