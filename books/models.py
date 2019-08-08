@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=True, blank=True, default='')
 
     class Meta:
         ordering = ('name',)
@@ -14,7 +14,7 @@ class Category(models.Model):
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=200, blank=False, default='',unique=True)
+    name = models.CharField(max_length=200, blank=True, default='',unique=True)
 
 
     class Meta:
