@@ -9,6 +9,7 @@ from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from books.serializers import UserSerializer
 from books.permissions import IsOwnerOrReadOnly
+from rest_framework.throttling import ScopedRateThrottle
 
 
 class ApiRoot(generics.GenericAPIView):
@@ -38,11 +39,15 @@ class CategoryList(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     name = 'category-list'
+    throttling_scope = "categories"
+    throttling_classes = (ScopedRateThrottle,)
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     name = 'category-detail'
+    throttling_scope = "categories"
+    throttling_classes = (ScopedRateThrottle,)
 
 class BookList(generics.ListCreateAPIView):
     queryset = Book.objects.all()
