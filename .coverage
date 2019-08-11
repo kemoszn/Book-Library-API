@@ -1,1 +1,1 @@
-!coverage.py: This is a private format, don't read it directly!{"lines":{}}
+!coverage.py: This is a private format, don't read it directly!{"lines": {"/home/metro/Workspace/Python/django/libraryapi/books/models.py": [2, 4, 6, 7, 9, 10, 12, 16, 17, 20, 21, 23, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 40], "/home/metro/Workspace/Python/django/libraryapi/books/admin.py": [2, 3, 4, 6, 7, 9, 10, 12, 13, 15, 16, 17], "/home/metro/Workspace/Python/django/libraryapi/books/__init__.py": [1], "/home/metro/Workspace/Python/django/libraryapi/books/apps.py": [8, 2, 4, 7]}}
