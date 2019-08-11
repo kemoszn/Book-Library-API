@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'books.apps.BooksConfig',
     'crispy_forms',
-    'django_nose',
+    #'django_nose',
+    #'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -135,10 +136,10 @@ REST_FRAMEWORK = {
     'books.pagination.LimitOffsetPaginationWithMaxLimit',
     'PAGE_SIZE': 5,
     #'DEFAULT_FILTER_BACKENDS': (
-    #    'rest_framework.filters.DjangoFilterBackend',
-    #    'rest_framework.filters.SearchFilter',
-    #    'rest_framework.filters.OrderingFilter',
-    #    ),
+        #'django_filters.rest_framework.DjangoFilterBackend',
+        #'rest_framework.filters.SearchFilter',
+        #'rest_framework.filters.OrderingFilter',
+        #),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',

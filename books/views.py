@@ -12,7 +12,8 @@ from books.permissions import IsOwnerOrReadOnly
 from rest_framework.throttling import ScopedRateThrottle
 #from rest_framework import filters
 #from django_filters import NumberFilter, DateTimeFilter, AllValuesFilter
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 class ApiRoot(generics.GenericAPIView):
     name = 'api-root'
@@ -30,6 +31,10 @@ class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     name = 'user-list'
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name']
+    search_fields = ['^name']
+    ordering_fields = ['name']
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
@@ -43,9 +48,10 @@ class CategoryList(generics.ListCreateAPIView):
     name = 'category-list'
     throttling_scope = "categories"
     throttling_classes = (ScopedRateThrottle,)
-    '''filter_fields = ('name',)
-    search_fields = ('^name',)
-    ordering_fields = ('name',)'''
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name']
+    search_fields = ['^name']
+    ordering_fields = ['name']
 
 class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
@@ -65,13 +71,10 @@ class BookList(generics.ListCreateAPIView):
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly,
         )
-    '''filter_fields = (
-        'title',
-        'category',
-        'author',
-    )
-    search_fields = ('^title',)
-    ordering_fields = ('title',)'''
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['title','author','category','owner']
+    search_fields = ['^title','^author']
+    ordering_fields = ['title', 'author']
 
 class BookDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
@@ -86,9 +89,10 @@ class AuthorList(generics.ListCreateAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     name = 'author-list'
-    '''filter_fields = ('name',)
-    search_fields = ('^name',)
-    ordering_fields = ('name',)'''
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['name']
+    search_fields = ['^name']
+    ordering_fields = ['name']
 
 class AuthorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Author.objects.all()
